@@ -1,0 +1,75 @@
+FORMAT: 1A
+HOST: https://epam.apiblueprint.org/
+
+# Refund API
+
+Click on Send API Request after entering the required data, to see how to process a Refund request.
+
++ A regular Refund.
++ A Refund that is split into multiple merchant accounts. This is applicable for those merchants whose accounts are configured to do so.
+
+## Refund [/v1/settlements]
+
+### Process Refund [POST /v1/settlements/{settlementId}/refunds]
+
++ Parameters
+
+   + settlementId : `66263dhnshdgsj` - This is the currency of the merchant account, e.g., USD or CAD.
+
++ Attributes
+
+   + currencyCode : `USD` - This is the currency of the merchant account, e.g., USD or CAD.
+                    _Mandatory, length<=3_
+
++ Request (application/json)
+
+    {
+      "merchantRefNum": "a9318b525273ee3cda79a2f947a9",
+      "amount": 500,
+      "dupCheck": true
+    }
+
++ Response 200 (application/json)
+
+        {
+          "id": "0549c2df-f995-43e9-ad1d-64cecfd2bc37",
+          "paymentType": "PAYSAFECASH",
+          "merchantRefNum": "a9318b525273ee3cda79a2f947a9",
+          "currencyCode": "USD",
+          "txnTime": "2023-01-20T04:21:44Z",
+          "status": "COMPLETED",
+          "gatewayReconciliationId": "b222abd6-1008-4723-83f5-615751778d16",
+          "amount": 500,
+          "updatedTime": "2023-01-20T04:21:45Z",
+          "statusTime": "2023-01-20T04:21:45Z",
+          "liveMode": false,
+          "gatewayResponse": {
+            "id": "b222abd6-1008-4723-83f5-615751778d16",
+            "processor": "PAYSAFECARD"
+        },
+            "source": "SingleAPI"
+        }
+
+### Cancel Refund [PUT /v1/refunds/{refundId}]
+
+Click on Send API Request after entering the required data, to cancel a Refund. You must include the status parameter set to CANCELLED.
+
++ Request (application/json)
+
+        {
+        "status": "CANCELLED"
+        }
+
++ Response 201 (application/json)
+
+    + Headers
+
+            Location: /questions/2
+
+    + Body
+
+            {
+              "id": "c7ef07b2-0069-4f58-b9e2-0f4cdbc6c725",
+              "txnTime": "2018-12-10T11:19:51Z",
+              "status": "CANCELLED"
+            }
